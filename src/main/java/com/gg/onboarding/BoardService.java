@@ -1,9 +1,6 @@
 package com.gg.onboarding;
 
-import com.gg.onboarding.DTO.BoardCreateRequestDto;
-import com.gg.onboarding.DTO.BoardCreateResponseDto;
-import com.gg.onboarding.DTO.BoardDetailsResponseDto;
-import com.gg.onboarding.DTO.BoardListResponseDto;
+import com.gg.onboarding.DTO.*;
 import com.gg.onboarding.domain.Board;
 import com.gg.onboarding.domain.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,5 +25,11 @@ public class BoardService {
     public List<BoardListResponseDto> boardList() {
         return boardRepository.findAll().stream()
                 .map(BoardListResponseDto::new).collect(Collectors.toList());
+    }
+
+    public BoardDetailsResponseDto boardModify(Long boardId, BoardModifyRequestDto requestDto) {
+        Board board = boardRepository.findBoardById(boardId);
+        board.boardModify(requestDto);
+        return new BoardDetailsResponseDto(board);
     }
 }

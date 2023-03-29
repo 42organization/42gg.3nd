@@ -33,4 +33,12 @@ public class BoardController {
                 .status(200).message("게시글 리스트 조회 성공")
                 .data(boardService.boardList()).build(),HttpStatus.OK);
     }
+
+    @PutMapping("/board/{id}")
+    public ResponseEntity boardModify(@PathVariable("id") Long boardId, @RequestBody BoardModifyRequestDto requestDto) {
+        return new ResponseEntity(Response.<BoardDetailsResponseDto>builder()
+                .status(200).message("게시글 수정 성공")
+                .data(Collections.singletonList(boardService.boardModify(boardId, requestDto)))
+                .build(), HttpStatus.OK);
+    }
 }
