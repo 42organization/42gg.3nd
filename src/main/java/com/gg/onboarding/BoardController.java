@@ -53,4 +53,16 @@ public class BoardController {
                 .data(Collections.singletonList(boardService.boardModify(boardId, requestDto)))
                 .build(), HttpStatus.OK);
     }
+    @DeleteMapping("/board/{id}")
+    public ResponseEntity boardRemove(@PathVariable("id") Long boardId) {
+        if (boardService.boardRemove(boardId)) {
+            return new ResponseEntity(Response.builder()
+                    .status(204).message("게시글 삭제 성공")
+                    .build(), HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity(Response.builder()
+                    .status(404).message("존재하지 않는 게시글입니다.")
+                    .build(), HttpStatus.OK);
+        }
+    }
 }

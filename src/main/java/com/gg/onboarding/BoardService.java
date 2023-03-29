@@ -39,4 +39,12 @@ public class BoardService {
         board.boardModify(requestDto);
         return new BoardDetailsResponseDto(board);
     }
+    public boolean boardRemove(Long boardId) {
+        if (boardRepository.findBoardById(boardId).isPresent()) {
+            boardRepository.deleteById(boardId);
+        } else {
+            return false;
+        }
+        return true;
+    }
 }
