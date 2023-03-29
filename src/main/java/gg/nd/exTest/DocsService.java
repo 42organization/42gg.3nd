@@ -15,7 +15,7 @@ public class DocsService {
         this.docsRepository = docsRepository;
     }
 
-    public Long add(Docs docs) {
+    public Long save(Docs docs) {
         docsRepository.save(docs);
         return docs.getId();
     }
@@ -26,5 +26,9 @@ public class DocsService {
 
     public Optional<Docs> findOne(Long docsId) {
         return docsRepository.findById(docsId);
+    }
+
+    public void delete(Long id){
+        docsRepository.deleteById(id);
     }
 }
