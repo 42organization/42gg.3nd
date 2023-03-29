@@ -8,19 +8,14 @@ import javax.persistence.EntityManager;
 
 @Configuration
 public class DocsConfig {
-    private final EntityManager em;
+    private final DocsRepository docsRepository;
 
-    public DocsConfig(EntityManager em){
-        this.em = em;
-    }
-
-    @Bean
-    public DocsRepository docsRepository(){
-        return new DocsRepository(em);
+    public DocsConfig(DocsRepository docsRepository){
+        this.docsRepository = docsRepository;
     }
 
     @Bean
     public DocsService docsService(){
-        return new DocsService(docsRepository());
+        return new DocsService(docsRepository);
     }
 }
