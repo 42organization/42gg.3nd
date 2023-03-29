@@ -1,6 +1,7 @@
 package com.gg.onboarding.domain;
 
 import com.gg.onboarding.DTO.BoardCreateRequestDto;
+import com.gg.onboarding.DTO.BoardModifyRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -34,6 +35,13 @@ public class Board {
         this.content = requestDto.getContent();
         this.nickname = requestDto.getNickname();
         this.create_date = LocalDateTime.now();
+        this.update_date = LocalDateTime.now();
+    }
+
+    public void boardModify(BoardModifyRequestDto requestDto) {
+        this.title = requestDto.getTitle();
+        this.content = requestDto.getContent();
+        this.nickname = requestDto.getNickname();
         this.update_date = LocalDateTime.now();
     }
 
