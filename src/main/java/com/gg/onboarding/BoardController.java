@@ -33,4 +33,17 @@ public class BoardController {
                 .status(200).message("게시글 리스트 조회 성공")
                 .data(boardService.boardList()).build(),HttpStatus.OK);
     }
+
+    @DeleteMapping("/board/{id}")
+    public ResponseEntity boardRemove(@PathVariable("id") Long boardId) {
+        if (boardService.boardRemove(boardId)) {
+            return new ResponseEntity(Response.builder()
+                    .status(204).message("게시글 삭제 성공")
+                    .build(), HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity(Response.builder()
+                    .status(404).message("존재하지 않는 게시글입니다.")
+                    .build(), HttpStatus.OK);
+        }
+    }
 }
