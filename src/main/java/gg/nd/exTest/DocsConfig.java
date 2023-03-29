@@ -13,8 +13,14 @@ public class DocsConfig {
     public DocsConfig(EntityManager em){
         this.em = em;
     }
+
     @Bean
     public DocsRepository docsRepository(){
         return new DocsRepository(em);
+    }
+
+    @Bean
+    public DocsService docsService(){
+        return new DocsService(docsRepository());
     }
 }
