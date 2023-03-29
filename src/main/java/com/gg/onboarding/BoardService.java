@@ -2,10 +2,15 @@ package com.gg.onboarding;
 
 import com.gg.onboarding.DTO.BoardCreateRequestDto;
 import com.gg.onboarding.DTO.BoardCreateResponseDto;
+import com.gg.onboarding.DTO.BoardDetailsResponseDto;
+import com.gg.onboarding.DTO.BoardListResponseDto;
 import com.gg.onboarding.domain.Board;
 import com.gg.onboarding.domain.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BoardService {
@@ -14,5 +19,14 @@ public class BoardService {
 
     public BoardCreateResponseDto boardCreate(BoardCreateRequestDto createRequestDto) {
         return new BoardCreateResponseDto(boardRepository.save(new Board(createRequestDto)));
+    }
+
+    public BoardDetailsResponseDto boardDetails(Long board_id) {
+        return new BoardDetailsResponseDto(boardRepository.findBoardById(board_id));
+    }
+
+    public List<BoardListResponseDto> boardList() {
+        return boardRepository.findAll().stream()
+                .map(BoardListResponseDto::new).collect(Collectors.toList());
     }
 }
