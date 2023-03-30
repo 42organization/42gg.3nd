@@ -21,14 +21,13 @@ public class DocsController {
     @GetMapping("/")
     @ResponseBody
     public List<Docs> getHome() {//"/" 게시물 리스트 출력
-        System.out.println(docsService.findDocs());
         List<Docs> req = docsService.findDocs();
         return req;
     }
 
     @PostMapping("/docs")
     @ResponseBody
-    public Long postDocs(ReqDto res) {//post "/docs" 게시물 등록 버튼 선택 시 오는 요청 디비 저장
+    public Long postDocs(@RequestBody ReqDto res) {//post "/docs" 게시물 등록 버튼 선택 시 오는 요청 디비 저장
         Docs docs = new Docs();
         docs.setName(res.getName());
         docs.setContent(res.getContent());
@@ -42,17 +41,22 @@ public class DocsController {
         return docsService.findOne(id);
     }
 
-    @PostMapping("/put/docs/")
-    public void putDocsId(ReqDto res) {//post "/put/docs" 수정페이지(/docs, 내용물 있음) 내용 디비에 수정
+    @PostMapping("/put/docs/{id}")
+    @ResponseBody
+    public String putDocsId(@PathVariable Long id, @RequestBody ReqDto res) {//post "/put/docs" 수정페이지(/docs, 내용물 있음) 내용 디비에 수정
         Docs docs = new Docs();
+        docs.setId(id);
         docs.setName(res.getName());
         docs.setContent(res.getContent());
 
         docsService.save(docs);
+        return "처리되었습니다.";
     }
 
     @PostMapping("/del/docs/{id}")
-    public void postDelDocsId(@PathVariable Long id) {//post "/del/docs/:id" 메인페이지에서 해당 게시물 디비에서 삭제
+    @ResponseBody
+    public String postDelDocsId(@PathVariable Long id) {//post "/del/docs/:id" 메인페이지에서 해당 게시물 디비에서 삭제
         docsService.delete(id);
+        return "아마도 삭제되었습니다.";
     }
 }
