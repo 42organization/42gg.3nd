@@ -33,7 +33,6 @@ public class BoardController {
                 .status(200).message("게시글 리스트 조회 성공")
                 .data(boardService.boardList()).build(),HttpStatus.OK);
     }
-
     @DeleteMapping("/board/{id}")
     public ResponseEntity boardRemove(@PathVariable("id") Long boardId) {
         if (boardService.boardRemove(boardId)) {
@@ -46,6 +45,7 @@ public class BoardController {
                     .build(), HttpStatus.OK);
         }
     }
+
     @PutMapping("/board/{id}")
     public ResponseEntity boardModify(@PathVariable("id") Long boardId, @RequestBody BoardModifyRequestDto requestDto) {
         return new ResponseEntity(Response.<BoardDetailsResponseDto>builder()

@@ -26,11 +26,13 @@ public class BoardService {
         return boardRepository.findAll().stream()
                 .map(BoardListResponseDto::new).collect(Collectors.toList());
     }
+    
     public BoardDetailsResponseDto boardModify(Long boardId, BoardModifyRequestDto requestDto) {
         Board board = boardRepository.findBoardById(boardId).orElseThrow();
         board.boardModify(requestDto);
         return new BoardDetailsResponseDto(board);
     }
+    
     public boolean boardRemove(Long boardId) {
         if (boardRepository.findBoardById(boardId).isPresent()) {
             boardRepository.deleteById(boardId);
