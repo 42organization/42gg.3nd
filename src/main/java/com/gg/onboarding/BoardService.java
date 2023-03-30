@@ -19,17 +19,26 @@ public class BoardService {
     }
 
     public BoardDetailsResponseDto boardDetails(Long board_id) {
-        return new BoardDetailsResponseDto(boardRepository.findBoardById(board_id));
+        return new BoardDetailsResponseDto(boardRepository.findBoardById(board_id).orElseThrow());
     }
 
     public List<BoardListResponseDto> boardList() {
         return boardRepository.findAll().stream()
                 .map(BoardListResponseDto::new).collect(Collectors.toList());
     }
-
+    
     public BoardDetailsResponseDto boardModify(Long boardId, BoardModifyRequestDto requestDto) {
-        Board board = boardRepository.findBoardById(boardId);
+        Board board = boardRepository.findBoardById(boardId).orElseThrow();
         board.boardModify(requestDto);
         return new BoardDetailsResponseDto(board);
+    }
+    
+    public boolean boardRemove(Long boardId) {
+        if (boardRepository.findBoardById(boardId).isPresent()) {
+            boardRepository.deleteById(boardId);
+        } else {
+            return false;
+        }
+        return true;
     }
 }
