@@ -27,12 +27,13 @@ public class DocsController {
     }
 
     @PostMapping("/docs")
-    public void postDocs(ReqDto res) {//post "/docs" 게시물 등록 버튼 선택 시 오는 요청 디비 저장
+    @ResponseBody
+    public Long postDocs(ReqDto res) {//post "/docs" 게시물 등록 버튼 선택 시 오는 요청 디비 저장
         Docs docs = new Docs();
         docs.setName(res.getName());
         docs.setContent(res.getContent());
 
-        docsService.save(docs);
+        return docsService.save(docs);
     }
 
     @GetMapping("/docs/{id}")
